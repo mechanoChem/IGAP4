@@ -1,0 +1,54 @@
+#if !defined (IGAP4)
+#define IGAP4
+
+#define PI    3.141592653589793
+#define EXP1  2.718281828459045
+
+#include "petscsnes.h"
+#include <stdlib.h>
+#include <stdio.h>
+
+#include "appctx.h"
+
+// ---- DOMAIN
+#include "domain.h"
+
+// ---- MESH
+#include "mesh.h"
+
+// ---- BOUNDARY
+#include "boundary.h"
+
+// ---- IGA
+PetscErrorCode compute_Residual(SNES snes, Vec U_, Vec Residual_, void *app_);
+PetscErrorCode compute_Tangent(SNES snes, Vec U_, Mat Tangent_, Mat Pmat_, void *app_);
+
+void init_dirichlet(double *U_, void *app_);
+void init_linadd(double *U_, double par_dirichlet[], double par_dirichlet_temp[], void *app_);
+void insert_knot_uniform(double *U_universal, const int nelem[], int nref, int porder, int ndim, int ndof, int bc_periodic[]);
+
+void solve(void *app_, int *converged);
+
+// ---- MPI
+void iga_init(void* app_);
+void set_mpi_comm(int *nselfIdx_,int **selfIdx_,int *nsendIdx_,int **sendIdx_,int **sendPtr_,int *nrecvIdx_,int **recvIdx_,int **recvPtr_,int nsendPart,int *sendBlock,int nrecvPart,int *recvBlock,int ndof,int porder,int nelem[],int nbasis[]);
+void set_mpi_universalIdx(void *app_);
+void set_mpi_globalIdx(int *globalIdx, int *iDof_displ_array, int nselfIdx, int *selfIdx, int nsendPart, int *sendPart, int nsendIdx, int *sendIdx, int *sendPtr, int nrecvPart, int *recvPart, int nrecvIdx, int *recvIdx, int *recvPtr, int nbasis[], int ndof);
+void set_nz(int *d_nz, int *o_nz, int nbasis[], int ndof, int porder, int nsendPart, int *sendBlock, int nrecvPart, int *recvBlock);
+
+// ---- PETSc
+void petsc_setup_arrays(void *app_);
+void petsc_setup_snes(void *app_);
+
+
+void save_solution(double *U_, char fname[], void *app_);
+void load_solution(double *U_, char fname[], void *app_);
+
+void compute_plot_field(void *app_, const char *fname, int nppe, double uscale);
+
+// ---- 
+#include "util.h"
+#include "mathutil.h"
+#include "quadrature.h"
+
+#endif
