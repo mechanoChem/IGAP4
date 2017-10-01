@@ -13,28 +13,21 @@ IGAP4 can be used to numerically solve (initial) boundary value problems that in
 > export IGAP4_DIR=/path/to/your/igap4/dir
 
 3) Compile the source and make shared libraries:
-> cd ${IGAP4_DIR}
-> make
+> cd ${IGAP4_DIR}; make
 
 4) If MathGL is installed and one desires to use the quick plotting functionality of IGAP4, do:
-> cd ${IGAP4_DIR}/src/mgl
-> make
+> cd ${IGAP4_DIR}/src/mgl; make
 
 ## Tests
 
 Compile the example application, "gradelasttimets", for testing (this will take a few minutes):
-> cd ${IGAP4_DIR}/application/gradelasttimets
-> make
+> cd ${IGAP4_DIR}/application/gradelasttimets; make
 
 Example without MathGL plottings (with 8 processes):
-> cd ${IGAP4_DIR}/example/ex_wo_plot
-> make
-> mpiexec -n 8 ./main
+> cd ${IGAP4_DIR}/example/ex_wo_plot; make; mpiexec -n 8 ./main
 
 Example with MathGL plottings (with 8 processes):
-> cd ${IGAP4_DIR}/example/ex_with_plot
-> make
-> mpiexec -n 8 ./main
+> cd ${IGAP4_DIR}/example/ex_with_plot; make; mpiexec -n 8 ./main
 
 ## Contributors
 
